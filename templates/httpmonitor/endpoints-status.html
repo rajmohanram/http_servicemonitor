@@ -1,0 +1,134 @@
+{% extends "base.html" %}
+{% block title %}<title>SSM | mWeb</title>{% endblock %}
+{% block content %}
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1 class="lead">Web Service Monitoring</h1>
+            </div>
+          </div>
+        </div><!-- /.container-fluid -->
+      </section>
+  
+      <!-- Main content -->
+      <section class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-6">
+              <div class="card">
+                <div class="card-header">
+                    <h6 class="text-muted m-0">
+                      <span class="mr-4 text-muted">
+                        <i class="far fa-arrow-alt-circle-up" style="font-size: 24px; color: green;"></i>
+                      </span>
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <table id="reachable" class="table table-bordered table-hover">
+                      <thead>
+                        <tr>
+                          <th>Endpoint</th>
+                          <th>Status code</th>
+                          <th>Response Time (ms)</th>
+                          <th>Last checked</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                </div>
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+            <div class="col-6">
+              <div class="card">
+                <div class="card-header">
+                    <h6 class="text-muted m-0">
+                      <span class="mr-4 text-muted">
+                        <i class="far fa-arrow-alt-circle-down" style="font-size: 24px; color: red;"></i>
+                      </span>
+                    </h6>
+                </div>
+                <div class="card-body">
+                    <table id="unreachable" class="table table-bordered table-hover">
+                      <thead>
+                        <tr>
+                          <th>Endpoint</th>
+                          <th>Status</th>
+                          <th>Down from</th>
+                          <th>Last checked</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                          <td></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                </div>
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+          </div>
+          <!-- /.row -->
+        </div>
+        <!-- /.container-fluid -->
+      </section>
+      <!-- Modals: Check endpoint status-->
+      <div class="modal fade" id="modal-check">
+        <div class="modal-dialog modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h4 class="modal-title">Endpoint status</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                  <table id="endpoint-status" class=" table table-bordered">
+                    <thead>                  
+                      <tr>
+                        <th style="width: 10px">Endpoint</th>
+                        <td id="url"></td>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th style="width: 10px">State</th>
+                        <td id="state"></td>
+                      </tr>
+                      <tr>
+                        <th style="width: 10px">Status code</th>
+                        <td id="code"></td>
+                      </tr>
+                      <tr>
+                        <th style="width: 10px">Error</th>
+                        <td id="error"></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="modal-footer justify-content-between">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+      </div>
+{% endblock %}
+{% block page-scripts %}
+    {% load static %}
+    <script src="{% static 'dist/js/pages/endpoint.status.js' %}"></script>
+{% endblock %}

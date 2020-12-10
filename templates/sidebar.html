@@ -1,0 +1,68 @@
+  {% load static %}
+  <!-- Main Sidebar Container -->
+  <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="{% url  'home' %}" class="brand-link">
+      <img src="{% static 'dist/img/monitoring.jpg' %}"
+           alt="SSM Logo"
+           class="brand-image img-circle elevation-3"
+           style="opacity: .8">
+      <span class="brand-text font-weight-light">SSM</span>
+    </a>
+    
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <!-- Sidebar Menu -->
+      <nav class="mt-2">
+        <ul class="nav nav-pills nav-sidebar text-sm flex-column nav-child-indent" data-widget="treeview" role="menu" data-accordion="false">
+            <li class="nav-item has-treeview">
+                <a href="#" class="nav-link">
+                  <i class="nav-icon far fa-eye"></i>
+                  <p>
+                    Monitoring
+                    <i class="fas fa-angle-left right"></i>
+                  </p>
+                </a>
+                <ul class="nav nav-treeview">
+                    <li class="nav-item">
+                        <a href="{% url  'httpmonitor.status' %}" class="nav-link">
+                        <i class="fas fa-network-wired"></i>
+                        <p class="text">Web Services</p>
+                        </a>
+                    </li>
+                </ul>
+            </li>
+          <div class="user-panel mt-3 pb-3 mb-3 d-flex"></div>
+          {% if user.is_superuser %}
+        <li class="nav-item has-treeview">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-user-shield"></i>
+              <p>
+                ADMIN Tasks
+                <i class="fas fa-angle-left right"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview"> 
+              <li class="nav-item">
+                <a href="{% url  'httpmonitor.endpoints' %}" class="nav-link">
+                    <i class="nav-icon far fa-list-alt"></i>
+                    <p class="text">HTTP Endpoints</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{% url  'usermgmt' %}" class="nav-link">
+                    <i class="nav-icon far fa-list-alt"></i>
+                  <p>Users</p>
+                </a>
+              </li>
+            </ul>
+        </li>
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex"></div>
+        {% endif %}
+        </ul>
+      </nav>
+      <!-- /.sidebar-menu -->
+    </div>
+    <!-- /.sidebar -->
+  </aside>

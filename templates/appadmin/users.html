@@ -1,0 +1,169 @@
+{% extends "base.html" %}
+{% block title %}<title>SSM | Users</title>{% endblock %}
+{% block content %}
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-sm-6">
+              <h1 class="lead">App Users</h1>
+            </div>
+          </div>
+        </div><!-- /.container-fluid -->
+      </section>
+  
+      <!-- Main content -->
+      <section class="content">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h6 class="text-muted m-0">
+                          <span class="mr-4">Users</span>
+                          <a href="#">
+                              <i class="fas fa-plus-square" 
+                                style="font-size: 24px; color: black;" 
+                                data-toggle="modal" data-target="#modal-add">
+                              </i>
+                          </a>
+                        </h6>
+                    </div>
+                    <div class="card-body">
+                        <table id="devices" class="table table-bordered table-hover">
+                        <thead>
+                        <tr>
+                            <th>Username</th>
+                            <th>Active</th>
+                            <th>Last login</th>
+                            <th>Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for user in users %}
+                        <tr>
+                            <td>{{ user.username}}</td>
+                            <td>
+                              {% if user.is_active %}
+                              <i class="fas fa-circle" style="font-size: 16px; color: green;"></i>
+                              {% else %}
+                              <i class="fas fa-circle" style="font-size: 16px; color: red;"></i>
+                              {% endif %}
+                            </td>
+                            <td>{{ user.last_login}}</td>
+                            <td>
+                              <button type="button" value="{{ user.id }}" class="btn btn-outline-primary btn-xs mr-2 update" data-toggle="modal" data-target="#modal-update">
+                                <i class="far fa-edit"></i>
+                            </button>
+                            <button type="button" value="{% url 'delUser'%}?id={{ user.id }}" class="btn btn-outline-danger btn-xs delete" data-toggle="modal" data-target="#modal-delete">
+                                <i class="far fa-trash-alt"></i>
+                            </button>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                        </table>
+                    </div>
+                </div>
+                <!-- /.card -->
+            </div>
+            <!-- /.col -->
+          </div>
+          <!-- /.row -->
+        </div>
+        <!-- /.container-fluid -->
+      </section>
+      <!-- Modals: Add user-->
+      <div class="modal fade" id="modal-add">
+        <div class="modal-dialog modal-dialog modal-lg">
+            <form class="form-horizontal" action="" method="POST">
+                {% csrf_token %}
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h4 class="modal-title">Add User</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group row">
+                            <label for="username" class="col-2 col-form-label">Username</label>
+                            <div class="col-10">
+                              <input type="text" class="form-control" id="username" name="username" placeholder="username" required>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="dname" class="col-2 col-form-label">Display Name</label>
+                            <div class="col-10">
+                              <input type="text" class="form-control" id="dname" name="dname" placeholder="Display Name" required>
+                            </div>
+                        </div>
+                        <ul>
+                          <li><h6 class="text-muted" style="font-size: 12px;">Default password will be set to user@123.</h6></li>
+                          <li><h6 class="text-muted" style="font-size: 12px;">User required to change password at first login.</h6></li>
+                        </ul>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                      <button type="submit" class="btn btn-primary">Add user</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+      </div>
+      <!-- Modals: update user-->
+      <div class="modal fade" id="modal-update">
+        <div class="modal-dialog modal-dialog modal-sm">
+            <form class="form-horizontal" action="{% url 'updUser' %}" method="POST">
+                {% csrf_token %}
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h4 class="modal-title">Update User</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                    <div class="modal-body">
+                      <div class="form-group row">
+                        <div class="col-10 offset-1">
+                          <input id="enabled" name="enabled" class="form-check-input" type="checkbox" checked>
+                          <label class="form-check-label">Enabled</label>
+                        </div>
+                      </div>
+                      <div class="form-group row">
+                          <div class="col-10 offset-1">
+                            <input id="cpasswd" type="password" class="form-control" name="password" placeholder="reset password?">
+                            <input id="upd-id" name="id" type="hidden" value="">
+                          </div>
+                      </div>
+                    </div>
+                    <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Update</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+      </div>
+      <!-- /.modal -->
+      <div class="modal fade" id="modal-delete">
+        <div class="modal-dialog modal-dialog-centered modal-sm">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h6 class="modal-title w-100 text-center">Confirm Deletion</h6>
+            </div>
+            <div class="modal-footer justify-content-between">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+              <a id="delete-link">
+                <button type="button" class="btn btn-danger">Delete</button>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- /.modal -->
+{% endblock %}
+{% block page-scripts %}
+    {% load static %}
+    <script src="{% static 'dist/js/pages/user.js' %}"></script>
+{% endblock %}
